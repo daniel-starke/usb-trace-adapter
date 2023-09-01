@@ -46,7 +46,7 @@ Use the following print settings:
 - nozzle diameter: 0.4mm
 - infill: ≥15%
 - perimeters: ≥3
-- arbitrary width perimeter generator (e.g. Arachne in PrusaSlicer)
+- variable width perimeter generator (e.g. Arachne in PrusaSlicer)
 - support: none
 - print orientation: same as STL
 
