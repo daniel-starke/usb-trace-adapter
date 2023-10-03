@@ -80,6 +80,37 @@ aligned when soldering. Especially when handling the USB plug.
 It is possible to glue 4 female jumper cables and a small block of plastic
 together to form a coded connector cable.
 
+## Tracing
+
+Sigrok provides ways to convert a logic trace into a PCAP file for further
+analysis via Wireshark. See https://sigrok.org/blog/new-protocol-decoder-usb-request
+
+### Example: Rigol DS1202Z-E with PulseView
+
+This combination works fine for USB low speed (1.5 Mbps) and high speed (12 Mbps)
+devices. However, it only captures a very short duration.
+
+- Connect both probes to `D+` and `D-` and the ground to `GND`.
+- Set the resolution to 5ms (trace length = 124ms, USB high speed) and the trigger to 1.5V.
+- Set trigger type to `Pulse` on the channel with `D+` with less than 80ns.
+- Run a single shot.
+- Connect PulseView to Rigol DS1202Z-E and set its data source to `Memory`.
+- Run the trace to collect the trace data.
+- Set both channels to logic conversion via threshold (TTL).
+- Add `USB request` decoder.
+
+### Example: AZDelivery Logic Analyzer with sigrok
+
+This combination works fine for USB low speed (1.5 Mbps) and may give some usable
+results with USB high speed (12 Mbps) devices. Preferable is a logic analyzer with
+48 MHz or more for USB high speed devices.
+
+- Connect both probes to `D+` (CH0) and `D-` (CH1) and the ground to `GND`.
+- `sigrok-cli -d fx2lafw -c samplerate=24M -C D0=DP,D1=DM --continuous -o trace.sr`.
+- `sigrok-cli -i trace.sr -P usb_signalling:dp=DP:dm=DM,usb_packet,usb_request -B usb_request=pcap > trace.pcap`
+
+Note that defining triggers does not work stable for this logic analyzer. The trace aborts shortly.
+
 # License
 
 See [LICENSE](LICENSE).  
