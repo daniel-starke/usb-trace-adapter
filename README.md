@@ -17,7 +17,7 @@ tracing and probing.
 ## PCB
 
 Use the following parameters when ordering the PCB. Note that the values
-have only been tested with JLCPCB so far. See [gerber  files](gerber).
+have only been tested with JLCPCB so far. See [gerber files](hw/gerber).
 - layers: 2
 - base material: FR4
 - dimensions: 21x18.8mm
